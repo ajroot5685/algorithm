@@ -11,12 +11,12 @@ public class Main {
 
     static int n, m;
     static int[] arr;
-    static int incase=0;
+    static int result=0;
 
     public static void main(String[] args) {
         input();
         solve();
-        System.out.println(incase);
+        System.out.println(result);
     }
     static void input(){
         n = scan.nextInt();
@@ -31,31 +31,21 @@ public class Main {
     static void solve(){
         int start = 0;
         int end = 0;
+        int sum = 0;
 
-        while(true){
-            if (end>=n){
+        while(start<n){
+            if (sum>=m){
+                sum-=arr[start++];
+            }else if (end >= n){
                 break;
+            }else {
+                sum+=arr[end++];
             }
-
-            int sum = sum(start, end);
 
             if (sum==m){
-                incase++;
-                end++;
-            }else if (sum>m){
-                start++;
-            }else{
-                end++;
+                result++;
             }
         }
-    }
-    static int sum(int s, int e){
-        int result = 0;
-        for (int i=s;i<=e;i++){
-            result+=arr[i];
-        }
-
-        return result;
     }
     static class FastReader {
         BufferedReader br;
