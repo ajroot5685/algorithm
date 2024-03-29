@@ -2,6 +2,9 @@ package org.example;
 
 
 import java.io.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -12,9 +15,58 @@ public class Main {
     static int n, m;
     static int[] arr;
 
+    static class Person{
+        public String name;
+        public int age;
+
+        public Person(String name, int age){
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName(){
+            return this.name;
+        }
+
+        public int getAge(){
+            return this.age;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (obj == this) {
+                return true;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+
+            Person p = (Person) obj;
+            return (this.getName().equals(p.getName()) && this.getAge() == p.getAge());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, age);
+        }
+    }
+
     public static void main(String[] args) {
-        input();
-        solve();
+        Person a = new Person("mike", 20);
+        Person b = new Person("mike", 20);
+
+        boolean isSame = a.equals(b);
+
+        System.out.println("a == b : " + isSame);
+
+        Set<Person> persons = new HashSet<Person>();
+        persons.add(a);
+        persons.add(b);
+
+        System.out.println(persons.size());
     }
     static void input(){
         n = scan.nextInt();
