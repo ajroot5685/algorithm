@@ -14,8 +14,7 @@ public class Main {
     static int m;
     static int w;
 
-    static ArrayList<Node>[] edge;
-    static ArrayList<WormHole> wormhole;
+    static ArrayList<Node> edge;
 
     static void input() {
         int t = scan.nextInt();
@@ -25,29 +24,23 @@ public class Main {
             m = scan.nextInt();
             w = scan.nextInt();
 
-            edge = new ArrayList[n + 1];
-            for (int j = 1; j <= n; j++) {
-                edge[j] = new ArrayList<>();
-            }
+            edge = new ArrayList<>();
 
             for (int j = 0; j < m; j++) {
                 int from = scan.nextInt();
                 int to = scan.nextInt();
                 int weight = scan.nextInt();
 
-                edge[from].add(new Node(to, weight));
-                edge[to].add(new Node(from, weight));
+                edge.add(new Node(from, to, weight));
+                edge.add(new Node(to, from, weight));
             }
-
-            wormhole = new ArrayList<>();
 
             for (int j = 0; j < w; j++) {
                 int from = scan.nextInt();
                 int to = scan.nextInt();
                 int weight = scan.nextInt();
 
-                edge[from].add(new Node(to, -weight));
-                wormhole.add(new WormHole(from, to, -weight));
+                edge.add(new Node(from, to, -weight));
             }
 
             solve();
@@ -56,71 +49,38 @@ public class Main {
         System.out.println(sb);
     }
 
-    static int[] distance;
-
     static void solve() {
-        distance = new int[n + 1];
+        int[] distance = new int[n + 1];
 
-        for (int i = 0; i < wormhole.size(); i++) {
-            WormHole wh = wormhole.get(i);
-            if (dijkstra(wh.to, wh.from, wh.weight)) {
-                sb.append("YES").append("\n");
-                return;
-            }
-        }
+        boolean result = false;
 
-        sb.append("NO").append("\n");
-    }
-
-    static boolean dijkstra(int start, int end, int weight) {
         for (int i = 1; i <= n; i++) {
-            distance[i] = Integer.MAX_VALUE;
-        }
+            for (int j = 0; j < edge.size(); j++) {
+                Node node = edge.get(j);
 
-        boolean[] visited = new boolean[n + 1];
-
-        PriorityQueue<Node> queue = new PriorityQueue<>();
-
-        distance[start] = 0;
-        queue.add(new Node(start, 0));
-
-        while (!queue.isEmpty()) {
-            Node node = queue.poll();
-
-            int vertex = node.to;
-            int cost = node.weight;
-
-            visited[vertex] = true;
-
-            for (int i = 0; i < edge[vertex].size(); i++) {
-                Node next = edge[vertex].get(i);
-
-                int vertex2 = next.to;
-                int cost2 = next.weight;
-
-                if (visited[vertex2] && cost2 + cost < 0) {
-                    return true;
-                }
-
-                if (distance[vertex2] > cost2 + cost) {
-                    distance[vertex2] = cost2 + cost;
-                    queue.add(new Node(vertex2, cost + cost2));
+                if (distance[node.to] > distance[node.from] + node.weight) {
+                    distance[node.to] = distance[node.from] + node.weight;
+                    if (i == n) {
+                        result = true;
+                    }
                 }
             }
         }
 
-        if (distance[end] == Integer.MAX_VALUE || distance[end] + weight >=0) {
-            return false;
-        }
-
-        return true;
+        if (result)
+            sb.append("YES").append("\n");
+        else
+            sb.append("NO").append("\n");
     }
+
 
     static class Node implements Comparable<Node> {
+        int from;
         int to;
         int weight;
 
-        public Node(int to, int weight) {
+        public Node(int from, int to, int weight) {
+            this.from = from;
             this.to = to;
             this.weight = weight;
         }
@@ -128,18 +88,6 @@ public class Main {
         @Override
         public int compareTo(Node n) {
             return this.weight - n.weight;
-        }
-    }
-
-    static class WormHole {
-        int from;
-        int to;
-        int weight;
-
-        public WormHole(int from, int to, int weight) {
-            this.from = from;
-            this.to = to;
-            this.weight = weight;
         }
     }
 
