@@ -19,6 +19,11 @@ public class _11727_silver_3 {
     }
 
     static void solve() {
+        if (n == 1) {
+            System.out.println(1);
+            return;
+        }
+
         int[] dp = new int[n + 1];
         dp[0] = 0;
         dp[1] = 1;
