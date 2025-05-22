@@ -19,12 +19,12 @@ public class _2941_silver_5 {
     }
 
     static void solve() {
-        List<String> croatia = List.of("c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z=");
+        List<String> croatia = Arrays.asList("c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z=");
 
         for (String substitution : croatia) {
             s = s.replaceAll(substitution, "1");
         }
-        
+
         System.out.println(s.length());
     }
 
