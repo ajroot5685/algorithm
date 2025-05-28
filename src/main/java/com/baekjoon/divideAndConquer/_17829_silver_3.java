@@ -3,7 +3,7 @@ package com.baekjoon.divideAndConquer;
 import java.io.*;
 import java.util.*;
 
-public class _17829 {
+public class _17829_silver_3 {
 
     static FastReader scan = new FastReader();
 

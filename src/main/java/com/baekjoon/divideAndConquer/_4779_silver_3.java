@@ -3,7 +3,7 @@ package com.baekjoon.divideAndConquer;
 import java.io.*;
 import java.util.*;
 
-public class _4779 {
+public class _4779_silver_3 {
 
     static List<Integer> input = new ArrayList<>();
     static char[] canto;
