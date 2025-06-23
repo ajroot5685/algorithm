@@ -3,7 +3,7 @@ package com.baekjoon.greedy;
 import java.io.*;
 import java.util.*;
 
-public class _18186_diamond_6 {
+public class _18186_diamond_5 {
 
     static FastReader scan = new FastReader();
 
